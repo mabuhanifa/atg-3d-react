@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import AllNames from "./components/AllNames";
+import Pagination from "./components/Pagination";
 import User from "./components/User";
 
 export default function App() {
   const [users, setUsers] = useState([]);
   const [single, setSingle] = useState({});
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
 
   const setData = (f, l) => {
     const singleUser = users.find(
@@ -29,6 +31,29 @@ export default function App() {
     fetchUsers();
   }, []);
 
+  const perPage = 10;
+  const lastIndex = page * perPage;
+  const firstIndex = lastIndex - perPage;
+  const allUsers = users.slice(firstIndex, lastIndex);
+  const totalPages = Math.ceil(users.length / perPage);
+
+  const selectPageHandler = (selectedPage) => {
+    if (selectedPage >= 1 && selectedPage <= totalPages) {
+      setPage(selectedPage);
+    }
+  };
+  const getNextPage = () => {
+    if (page < totalPages) {
+      setPage(page + 1);
+    }
+  };
+
+  const getPrevPage = () => {
+    if (page > 1) {
+      setPage(page - 1);
+    }
+  };
+
   return (
     <div className="">
       <section className="flex md:gap-x-[105px] gap-x-2 justify-center">
@@ -37,8 +62,8 @@ export default function App() {
             USERS LIST
           </h1>
 
-          {users &&
-            users.map((user, index) => (
+          {allUsers &&
+            allUsers.map((user, index) => (
               <AllNames
                 key={index}
                 user={user}
@@ -55,6 +80,15 @@ export default function App() {
           <User single={single} />
         </div>
       </section>
+      <div className="flex justify-center">
+        <Pagination
+          selectPageHandler={selectPageHandler}
+          totalPages={totalPages}
+          page={page}
+          getPrevPage={getPrevPage}
+          getNextPage={getNextPage}
+        />
+      </div>
     </div>
   );
 }
