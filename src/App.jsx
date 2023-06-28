@@ -29,8 +29,6 @@ export default function App() {
     fetchUsers();
   }, []);
 
-  console.log(users);
-
   return (
     <div className="">
       <section className="flex md:gap-x-[105px] gap-x-2 justify-center">
