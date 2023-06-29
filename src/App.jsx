@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import AllNames from "./components/AllNames";
 import Pagination from "./components/Pagination";
+import Spinner from "./components/Spinner";
 import User from "./components/User";
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
         setLoading(false);
       }
       setUsers(data);
+      setSingle(data[0]);
     };
     fetchUsers();
   }, []);
@@ -53,7 +55,9 @@ export default function App() {
       setPage(page - 1);
     }
   };
-
+  if (loading) {
+    return <Spinner />;
+  }
   return (
     <div className="">
       <section className="flex md:gap-x-[105px] gap-x-2 justify-center">

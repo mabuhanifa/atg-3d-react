@@ -6,16 +6,12 @@ export default function User({ single }) {
     <div className="">
       <div className="flex justify-center">
         <div>
-          <img
-            src={avatar}
-            alt="avatar"
-            className="rounded-full mt-[27px]"
-          />
+          <img src={avatar} alt="avatar" className="rounded-full mt-[27px]" />
         </div>
       </div>
 
       <p className="my-4 font-[500] text-center text-sm">
-        @{single.profile?.username}
+        @{single?.profile?.username}
       </p>
 
       <div className="flex justify-center">
